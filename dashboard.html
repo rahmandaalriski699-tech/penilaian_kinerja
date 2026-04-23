@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard E-Kinerja</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  background: linear-gradient(135deg, #1f7a5c, #0b3d2e);
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 { margin-bottom: 25px; }
+
+.sidebar a {
+  display: block;
+  color: #d4f5e9;
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ACTIVE MENU */
+.sidebar a.active {
+  background: rgba(255,255,255,0.3);
+}
+
+/* MAIN */
+.main { flex: 1; padding: 30px; }
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  color: white;
+}
+
+.logout-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* FORM */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.full { grid-column: span 2; }
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+/* BUTTON */
+button {
+  padding: 10px 15px;
+  background: #00c896;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+th { background: rgba(0,0,0,0.3); }
+
+.delete-btn {
+  background: crimson;
+  padding: 5px 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2><i class="fa-solid fa-tree"></i> E-Kinerja</h2>
+
+  <a href="dashboard.html" class="active">
+    <i class="fa-solid fa-home"></i> Dashboard
+  </a>
+
+  <a href="laporan.html">
+    <i class="fa-solid fa-file"></i> Laporan
+  </a>
+
+  <a href="penilaian.html">
+    <i class="fa-solid fa-chart-line"></i> Penilaian
+  </a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div id="welcome"></div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- FORM INPUT -->
+  <div class="card">
+    <h3><i class="fa-solid fa-upload"></i> Input Laporan (PDF)</h3>
+
+    <div class="form-grid">
+      <div>
+        <label>Tanggal</label>
+        <input type="date" id="tanggal">
+      </div>
+
+      <div>
+        <label>Unit Kerja</label>
+        <select id="unit">
+  <option value="">-- Pilih Unit Kerja --</option>
+
+  <option>Sekretariat</option>
+  <option>Bidang PHKSDAE</option>
+  <option>Bidang PRPH</option>
+  <option>Bidang PPMHA</option>
+  <option>Bidang PDAS RHL</option>
+
+  <option>UPTD KPHL Pasaman Unit I</option>
+  <option>UPTD KPHL Pasaman Barat Unit II</option>
+  <option>UPTD KPHL Limapuluh Kota Unit III</option>
+  <option>UPTD KPHL Agam Unit IV</option>
+  <option>UPTD KPHL Bukit Barisan Unit V</option>
+  <option>UPTD KPHL Sijunjung Unit VI</option>
+  <option>UPTD KPHL Solok Unit VII</option>
+
+  <option>UPTD KPHP Solok Selatan Unit VIII</option>
+  <option>UPTD KPHP Dharmasraya Unit IX</option>
+  <option>UPTD KPHP Pesisir Selatan Unit X</option>
+  <option>UPTD KPHP Pagai Sipora Unit XI</option>
+  <option>UPTD KPHP Siberut Unit XII</option>
+
+  <option>UPTD Balai Sertifikasi dan Perbenihan Tanaman Hutan</option>
+</select>
+      </div>
+
+      <div class="full">
+        <label>Upload File PDF</label>
+        <input type="file" id="file" accept="application/pdf">
+      </div>
+    </div>
+
+    <br>
+    <button onclick="tambah()">
+      <i class="fa-solid fa-save"></i> Simpan
+    </button>
+  </div>
+
+  <!-- DATA TERAKHIR -->
+  <div class="card">
+    <h3><i class="fa-solid fa-clock"></i> Data Terakhir</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Unit</th>
+          <th>File</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="tabel"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+// 🔐 CEK LOGIN
+if (localStorage.getItem("isLogin") !== "true") {
+  alert("Silakan login terlebih dahulu!");
+  window.location.href = "login.html";
+}
+
+// 👤 NAMA USER
+document.getElementById("welcome").innerText =
+  "Selamat datang, " + (localStorage.getItem("nama") || "User") + " 👋";
+
+// ➕ TAMBAH DATA
+function tambah() {
+  const tanggal = document.getElementById("tanggal").value;
+  const unit = document.getElementById("unit").value;
+  const fileInput = document.getElementById("file");
+  const file = fileInput.files[0];
+
+  if (!tanggal || !unit || !file) {
+    alert("Semua data harus diisi!");
+    return;
+  }
+
+  if (file.type !== "application/pdf") {
+    alert("File harus berupa PDF!");
+    fileInput.value = "";
+    return;
+  }
+
+  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+
+  data.push({
+    tanggal: tanggal,
+    unit: unit,
+    file: file.name,
+    nilai: "-"
+  });
+
+  localStorage.setItem("laporan", JSON.stringify(data));
+
+  alert("Laporan berhasil disimpan!");
+
+  // reset form
+  document.getElementById("tanggal").value = "";
+  document.getElementById("unit").value = "";
+  fileInput.value = "";
+
+  tampil();
+}
+
+// 📋 TAMPIL DATA TERAKHIR
+function tampil() {
+  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+  let html = "";
+
+  data.slice(-5).reverse().forEach((d, i) => {
+    html += `
+      <tr>
+        <td>${d.tanggal}</td>
+        <td>${d.unit}</td>
+        <td>${d.file}</td>
+        <td>
+          <button class="delete-btn" onclick="hapus(${i})">
+            Hapus
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("tabel").innerHTML = html;
+}
+
+// ❌ HAPUS
+function hapus(index) {
+  let data = JSON.parse(localStorage.getItem("laporan"));
+  data.splice(index, 1);
+  localStorage.setItem("laporan", JSON.stringify(data));
+  tampil();
+}
+
+// 🚪 LOGOUT
+function logout() {
+  localStorage.removeItem("isLogin");
+  window.location.href = "login.html";
+}
+
+// LOAD
+tampil();
+</script>
+
+</body>
+</html>

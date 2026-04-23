@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Penilaian Kinerja</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  background: linear-gradient(135deg, #1f7a5c, #0b3d2e);
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 { margin-bottom: 25px; }
+
+.sidebar a {
+  display: block;
+  color: #d4f5e9;
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateX(5px);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 30px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  color: white;
+}
+
+/* TITLE */
+.card h3 {
+  margin-bottom: 15px;
+}
+
+/* LIST */
+ul {
+  list-style: none;
+}
+
+li {
+  background: rgba(255,255,255,0.15);
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  border-left: 5px solid #00c896;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+li:hover {
+  transform: scale(1.02);
+}
+
+/* TEXT */
+li b {
+  color: #00ffcc;
+}
+
+small {
+  color: #ddd;
+}
+
+/* INPUT */
+input, select {
+  padding: 10px;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+/* BUTTON */
+button {
+  background: linear-gradient(45deg, #00c896, #1f7a5c);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* NILAI BOX */
+.nilai-box {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #00ffcc;
+}
+
+/* RATA */
+#rataNilai {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* HASIL */
+#hasil {
+  margin-top: 10px;
+  color: #00ffcc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2><i class="fa-solid fa-tree"></i> E-Kinerja</h2>
+  <a href="dashboard.html"><i class="fa-solid fa-home"></i> Dashboard</a>
+  <a href="laporan.html"><i class="fa-solid fa-file"></i> Laporan</a>
+  <a href="penilaian.html"><i class="fa-solid fa-chart-line"></i> Penilaian</a>
+</div>
+
+<div class="main">
+
+  <!-- LIST -->
+  <div class="card">
+    <h3><i class="fa-solid fa-star"></i> Penilaian Kinerja</h3>
+    <ul id="listPenilaian"></ul>
+    <h4 id="rataNilai"></h4>
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+    <h3><i class="fa-solid fa-calculator"></i> Penilaian Otomatis</h3>
+
+    <label>Nilai Laporan</label>
+    <select id="laporan">
+      <option value="5">AA</option>
+      <option value="4">A</option>
+      <option value="3">BB</option>
+      <option value="2">B</option>
+      <option value="1">C</option>
+    </select>
+
+    <label>Hari Tindak Lanjut</label>
+    <input type="number" id="hari">
+
+    <button onclick="hitung()">
+      <i class="fa-solid fa-calculator"></i> Hitung Nilai
+    </button>
+
+    <h3 id="hasil"></h3>
+  </div>
+
+</div>
+
+<script>
+// LOGIN
+if(localStorage.getItem("isLogin") !== "true"){
+  window.location.href = "login.html";
+}
+
+// TAMPIL DATA
+function tampilkanPenilaian(){
+  let list = document.getElementById("listPenilaian");
+  list.innerHTML = "";
+
+  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+  let total = 0, count = 0;
+
+  data.forEach((item, index)=>{
+    if(item.nilai){
+      total += parseInt(item.nilai);
+      count++;
+    }
+
+    let li = document.createElement("li");
+    li.innerHTML = `
+      <b>${item.unit}</b><br>
+      ${item.laporan}<br>
+      <small><i class="fa-solid fa-calendar"></i> ${item.tanggal}</small><br>
+
+      <input type="number" id="nilai${index}" value="${item.nilai || ""}">
+      <button onclick="simpanNilai(${index})">
+        <i class="fa-solid fa-save"></i> Simpan
+      </button>
+
+      ${item.nilai ? `<div class="nilai-box">Nilai: ${item.nilai}</div>` : ""}
+    `;
+    list.appendChild(li);
+  });
+
+  let rata = count ? (total / count).toFixed(2) : 0;
+  document.getElementById("rataNilai").innerText = "Rata-rata nilai: " + rata;
+}
+
+// SIMPAN NILAI
+function simpanNilai(index){
+  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+  let nilai = document.getElementById("nilai"+index).value;
+
+  if(!nilai || nilai < 0 || nilai > 100){
+    alert("Nilai harus 0 - 100!");
+    return;
+  }
+
+  data[index].nilai = nilai;
+  localStorage.setItem("laporan", JSON.stringify(data));
+  tampilkanPenilaian();
+}
+
+// HITUNG
+function hitung(){
+  let laporan = parseInt(document.getElementById("laporan").value);
+  let hari = parseInt(document.getElementById("hari").value);
+
+  let nilaiHari = 0;
+  if (hari < 15) nilaiHari = 5;
+  else if (hari <= 30) nilaiHari = 4;
+  else if (hari <= 45) nilaiHari = 3;
+  else if (hari <= 60) nilaiHari = 2;
+  else nilaiHari = 1;
+
+  let total = laporan + nilaiHari;
+  document.getElementById("hasil").innerText = "Nilai: " + total;
+}
+
+tampilkanPenilaian();
+</script>
+
+</body>
+</html>

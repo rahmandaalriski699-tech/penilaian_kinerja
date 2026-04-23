@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>E-Kinerja Dishut — Sistem Informasi Kinerja Kehutanan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/indexstyle.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/homepage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+/* STRUKTUR PENILAIAN */
+.struktur-wrapper {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.badge {
+  color: #2ecc71;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.struktur-wrapper h2 {
+  font-size: 32px;
+  margin: 10px 0 40px;
+}
+
+/* GRID */
+.struktur-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* CARD */
+.card-struktur {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+/* BADGE PERSEN */
+.percent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 12px;
+  border-radius: 0 12px 0 12px;
+  color: white;
+  font-size: 12px;
+}
+
+/* WARNA */
+.green { border-top: 4px solid #2ecc71; }
+.green .percent { background: #2ecc71; }
+
+.blue { border-top: 4px solid #3b82f6; }
+.blue .percent { background: #3b82f6; }
+
+.orange { border-top: 4px solid #f59e0b; }
+.orange .percent { background: #f59e0b; }
+
+.card-struktur h4 {
+  margin-bottom: 15px;
+}
+
+.card-struktur ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card-struktur ul li {
+  margin-bottom: 10px;
+}
+
+.card-struktur ul li i {
+  color: green;
+  margin-right: 8px;
+}
+  </style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div><i class="fa-solid fa-tree"></i> Dinas Kehutanan Provinsi Sumatera Barat</div>
+    <div><i class="fa-solid fa-phone"></i> (0751) 7052725</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container">
+
+    <div class="logo-section">
+      <div class="logo-sumbar">
+        <i class="fa-solid fa-tree"></i>
+      </div>
+      <div class="logo-text">
+        <h1>E-KINERJA DISHUT</h1>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="register.html" class="btn-daftar">Daftar</a>
+    </nav>
+
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+
+    <div class="hero-badge">
+      <i class="fa-solid fa-leaf"></i>
+      Platform Resmi Dinas Kehutanan
+    </div>
+
+    <h2>SI-TEKAD HUTAN</h2>
+
+    <p>
+      Sistem Integrasi,Evaluasi,dan Peringatan Dini Kinerja Kehutanan
+    </p>
+
+
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+
+      <div class="stat-box">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span class="stat-number">0</span>
+        <span class="stat-label">Total Laporan Kinerja</span>
+      </div>
+
+      <div class="stat-box">
+        <i class="fa-solid fa-spinner"></i>
+        <span class="stat-number">0</span>
+        <span class="stat-label">Dalam Proses</span>
+      </div>
+
+      <div class="stat-box">
+        <i class="fa-solid fa-check-circle"></i>
+        <span class="stat-number">0</span>
+        <span class="stat-label">Selesai Dinilai</span>
+      </div>
+
+      <div class="stat-box">
+        <i class="fa-solid fa-users"></i>
+        <span class="stat-number">18</span>
+        <span class="stat-label">Unit Kerja Terdaftar</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FITUR -->
+<section class="section" id="fitur">
+  <div class="container">
+
+    <div class="section-title">
+      <h1><i></i> Replikasi & Adaptasi Rapor Kinerja </h1>
+      <p>Membangun sistem penilaian kinerja unit kerja/bidang di lingkup Dinas Kehutanan yang 
+        selaras dengan Kepgub Rapor Kinerja OPD.</p>
+    </div>
+
+    <div class="features">
+
+      <div class="feature-box">
+        <i class="fa-solid fa-file-pen"></i>
+        <h4>Selaras Regulasi</h4>
+        <p>Berbasis data perencanaan–penganggaran–kinerja dan sesuai dengan Kepgub Rapor Kinerja OPD.</p>
+      </div>
+
+      <div class="feature-box">
+        <i class="fa-solid fa-chart-line"></i>
+        <h4>Instrumen Pembinaan</h4>
+        <p>Alat untuk reward–punishment dan perbaikan kinerja internal. Dishut menilai diri secara sistematis.</p>
+      </div>
+
+      <div class="feature-box">
+        <i class="fa-solid fa-user-check"></i>
+        <h4>Aman & Terukur</h4>
+        <p>Tidak melanggar kewenangan. Ini adalah internal management tool, bukan kebijakan lintas OPD.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUKTUR PENILAIAN -->
+<section class="section">
+  <div class="container">
+
+    <div class="struktur-wrapper">
+      <h2>Struktur Penilaian Provinsi</h2>
+
+      <div class="struktur-grid">
+
+        <div class="card-struktur green">
+          <div class="percent">60%</div>
+          <h4>Kinerja Utama</h4>
+          <ul>
+            <li><i class="fa-solid fa-check-circle"></i> Nilai SAKIP</li>
+            <li><i class="fa-solid fa-check-circle"></i> Tindak Lanjut Hasil Pengawasan</li>
+            <li><i class="fa-solid fa-check-circle"></i> Capaian Indikator Kinerja Program</li>
+            <li><i class="fa-solid fa-check-circle"></i> Capaian Indikator Kinerja Daerah</li>
+            <li><i class="fa-solid fa-check-circle"></i> Pelayanan Publik </li>
+            <li><i class="fa-solid fa-check-circle"></i> Survey Kepuasan Masyarakat</li>
+            <li><i class="fa-solid fa-check-circle"></i> Inovasi</li>
+            <li><i class="fa-solid fa-check-circle"></i> Indeks Kinerja Pengelolaan Barang Milik</li>
+            <li><i class="fa-solid fa-check-circle"></i> Pemenuhan Pengembangan Kompetensi </li>
+            <li><i class="fa-solid fa-check-circle"></i> Penilaian Kinerja PBJ </li>
+            <li><i class="fa-solid fa-check-circle"></i> Kemimpinan Manajerial</li>
+            <li><i class="fa-solid fa-check-circle"></i> Capaian Target pendapatan</li>
+
+          </ul>
+        </div>
+
+        <div class="card-struktur blue">
+          <div class="percent">20%</div>
+          <h4>Kinerja Pendukung</h4>
+          <ul>
+            <li><i class="fa-solid fa-check-circle"></i> Keterbukaan Informasi</li>
+            <li><i class="fa-solid fa-check-circle"></i> Publikasi OPD</li>
+            <li><i class="fa-solid fa-check-circle"></i> Tingkat Implementasi Budaya Kerja</li>
+            <li><i class="fa-solid fa-check-circle"></i> Rata-rata Realisasi Fisik dan keuangan</li>
+          </ul>
+        </div>
+
+        <div class="card-struktur orange">
+          <div class="percent">20%</div>
+          <h4>Kinerja Tambahan</h4>
+          <ul>
+            <li><i class="fa-solid fa-check-circle"></i> Laporan Harta Kekayaan Aparatur Negara</li>
+            <li><i class="fa-solid fa-check-circle"></i> Indek pengawasan Arsip</li>
+            <li><i class="fa-solid fa-check-circle"></i> Pemanfaatan Arsip Digital</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- STRUKTUR PENILAIAN -->
+<section class="section">
+  <div class="container">
+
+    <div class="struktur-wrapper">
+      <h2>Struktur Penilaian Dishut</h2>
+
+      <div class="struktur-grid">
+
+        <div class="card-struktur green">
+          <div class="percent">60%</div>
+          <h4>Kinerja Utama</h4>
+          <ul>
+            <li><i class="fa-solid fa-check-circle"></i> Nilai Laporan Kinerja</li>
+            <li><i class="fa-solid fa-check-circle"></i> Tindak Lanjut Hasil Pengawasan</li>
+            <li><i class="fa-solid fa-check-circle"></i> Capaian Indikator Perjanjian Kinerja Per TW</li>
+            <li><i class="fa-solid fa-check-circle"></i> Pelayanan Publik </li>
+            <li><i class="fa-solid fa-check-circle"></i> Survey Kepuasan Masyarakat</li>
+            <li><i class="fa-solid fa-check-circle"></i> Inovasi</li>
+            <li><i class="fa-solid fa-check-circle"></i> Indeks Kinerja Pengelolaan Barang Milik</li>
+            <li><i class="fa-solid fa-check-circle"></i> Pemenuhan Pengembangan Kompetensi </li>
+            <li><i class="fa-solid fa-check-circle"></i> Penilaian Kinerja PBJ </li>
+            <li><i class="fa-solid fa-check-circle"></i> Kemimpinan Manajerial</li>
+
+          </ul>
+        </div>
+
+        <div class="card-struktur blue">
+          <div class="percent">20%</div>
+          <h4>Kinerja Pendukung</h4>
+          <ul>
+            <li><i class="fa-solid fa-check-circle"></i> Publikasi OPD</li>
+            <li><i class="fa-solid fa-check-circle"></i> Tingkat Implementasi Budaya Kerja</li>
+            <li><i class="fa-solid fa-check-circle"></i> Rata-rata Realisasi Fisik dan keuangan</li>
+          </ul>
+        </div>
+
+        <div class="card-struktur orange">
+          <div class="percent">20%</div>
+          <h4>Kinerja Tambahan</h4>
+          <ul>
+            <li><i class="fa-solid fa-check-circle"></i> Laporan Harta Kekayaan Aparatur Negara</li>
+            <li><i class="fa-solid fa-check-circle"></i> Indek pengawasan Arsip</li>
+            <li><i class="fa-solid fa-check-circle"></i> Pemanfaatan Arsip Digital</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section style="padding:60px 20px; background:#f5f7fa;">
+  <div style="max-width:900px; margin:auto; text-align:center;">
+
+    <div style="color:#22c55e; font-weight:bold; font-size:12px; letter-spacing:1px;">
+      NILAI TAMBAH NYATA
+    </div>
+
+    <h2 style="margin:10px 0 30px; font-size:32px;">
+      Transformasi Cara Kerja
+    </h2>
+
+    <div style="
+      background:#fff;
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+      overflow:hidden;
+    ">
+      <table style="width:100%; border-collapse:collapse; text-align:left;">
+
+        <thead style="background:#f9fafb;">
+          <tr>
+            <th style="padding:18px;">ASPEK</th>
+            <th style="padding:18px; color:#ef4444;">SEBELUM</th>
+            <th style="padding:18px; color:#22c55e;">SESUDAH INOVASI</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td style="padding:18px;">Monitoring</td>
+            <td>Parsial</td>
+            <td style="background:#eaf7ee; font-weight:600;">Terintegrasi</td>
+          </tr>
+          <tr>
+            <td style="padding:18px;">Evaluasi</td>
+            <td>Reaktif</td>
+            <td style="background:#eaf7ee; font-weight:600;">Proaktif</td>
+          </tr>
+          <tr>
+            <td style="padding:18px;">Data</td>
+            <td>Terpisah</td>
+            <td style="background:#eaf7ee; font-weight:600;">Satu Kerangka</td>
+          </tr>
+          <tr>
+            <td style="padding:18px;">Pembinaan</td>
+            <td>Subjektif</td>
+            <td style="background:#eaf7ee; font-weight:600;">Berbasis Skor</td>
+          </tr>
+          <tr>
+            <td style="padding:18px;">Inovasi OPD</td>
+            <td>Sporadis</td>
+            <td style="background:#eaf7ee; font-weight:600;">Sistemik</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="container footer-content">
+
+    <div class="footer-section">
+      <h4>E-KINERJA DISHUT</h4>
+      <p>Sistem digital resmi Dinas Kehutanan</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Kontak</h4>
+      <p>Padang, Sumatera Barat</p>
+      <p>dishut@sumbarprov.go.id</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 E-Kinerja Dishut
+  </div>
+</div>
+
+</body>
+</html>
+

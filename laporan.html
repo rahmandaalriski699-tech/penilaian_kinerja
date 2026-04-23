@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Data Laporan</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  background: linear-gradient(135deg, #1f7a5c, #0b3d2e);
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 25px;
+}
+
+.sidebar a {
+  display: block;
+  color: #d4f5e9;
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateX(5px);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 30px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  color: white;
+}
+
+/* TITLE */
+.card h3 {
+  margin-bottom: 20px;
+}
+
+/* LIST ITEM */
+li {
+  background: rgba(255,255,255,0.15);
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  border-left: 5px solid #00c896;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+li:hover {
+  transform: scale(1.02);
+}
+
+/* TEXT */
+li b {
+  color: #00ffcc;
+}
+
+small {
+  color: #ddd;
+}
+
+/* INPUT */
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+/* BUTTON */
+button {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-right: 5px;
+  transition: 0.3s;
+}
+
+/* EDIT */
+.edit-btn {
+  background: linear-gradient(45deg, orange, gold);
+  color: white;
+}
+
+.edit-btn:hover {
+  transform: scale(1.05);
+}
+
+/* DELETE */
+.delete-btn {
+  background: linear-gradient(45deg, #ff4d4d, #ff0000);
+  color: white;
+}
+
+.delete-btn:hover {
+  transform: scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2><i class="fa-solid fa-tree"></i> E-Kinerja</h2>
+
+  <a href="dashboard.html"><i class="fa-solid fa-home"></i> Dashboard</a>
+  <a href="laporan.html"><i class="fa-solid fa-file"></i> Laporan</a>
+  <a href="penilaian.html"><i class="fa-solid fa-chart-line"></i> Penilaian</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="card">
+    <h3><i class="fa-solid fa-list"></i> Daftar Laporan</h3>
+    <ul id="listLaporan"></ul>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+if(localStorage.getItem("isLogin") !== "true"){
+  window.location.href = "login.html";
+}
+
+function tampilkanLaporan(){
+  let list = document.getElementById("listLaporan");
+  list.innerHTML = "";
+
+  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+
+  data.forEach((item, index)=>{
+    let li = document.createElement("li");
+    li.innerHTML = `
+      <b>${item.unit}</b><br>
+      ${item.laporan}<br>
+
+      <small><i class="fa-solid fa-calendar"></i> ${item.tanggal}</small><br>
+
+      <input type="text" class="tanggalPicker" id="editTanggal${index}" value="${item.tanggal}">
+
+      <button class="edit-btn" onclick="editTanggal(${index})">
+        <i class="fa-solid fa-pen"></i> Edit
+      </button>
+
+      <button class="delete-btn" onclick="hapus(${index})">
+        <i class="fa-solid fa-trash"></i> Hapus
+      </button>
+    `;
+    list.appendChild(li);
+  });
+
+  flatpickr(".tanggalPicker", {
+    dateFormat: "Y-m-d"
+  });
+}
+
+function editTanggal(index){
+  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+
+  let newTanggal = document.getElementById("editTanggal"+index).value;
+
+  if(!newTanggal){
+    alert("Pilih tanggal dulu!");
+    return;
+  }
+
+  data[index].tanggal = newTanggal;
+
+  localStorage.setItem("laporan", JSON.stringify(data));
+
+  alert("Tanggal berhasil diubah!");
+  tampilkanLaporan();
+}
+
+function hapus(index){
+  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+  data.splice(index,1);
+  localStorage.setItem("laporan", JSON.stringify(data));
+  tampilkanLaporan();
+}
+
+tampilkanLaporan();
+</script>
+
+</body>
+</html>
