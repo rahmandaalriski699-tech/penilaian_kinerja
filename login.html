@@ -2,165 +2,90 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Login - E-Kinerja Dishut</title>
+  <title>Login E-Kinerja</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Font Awesome -->
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/login.css">
+
+  <!-- ICON -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+  <!-- NOTIF STYLE (TETAP DIPERTAHANKAN) -->
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #0b3d2e, #145c44);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .card {
-      background: #f5f5f5;
-      padding: 30px;
-      width: 380px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .card h2 {
-      margin-bottom: 10px;
-      font-size: 22px;
-      color: #0b3d2e;
-    }
-
-    .card p {
-      margin-bottom: 20px;
-      color: #555;
-      font-size: 14px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      outline: none;
-      transition: 0.3s;
-    }
-
-    input:focus {
-      border-color: #0b3d2e;
-      box-shadow: 0 0 5px rgba(11, 61, 46, 0.3);
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #0b3d2e;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #145c44;
-    }
-
-    .register-text {
+    .notif {
       margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
       font-size: 14px;
       text-align: center;
+      transition: 0.3s;
     }
 
-    .register-text a {
-      color: #0b3d2e;
-      text-decoration: none;
-      font-weight: bold;
+    .success {
+      background: #d4edda;
+      color: #155724;
     }
 
-    .register-text a:hover {
-      text-decoration: underline;
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .warning {
+      background: #fff3cd;
+      color: #856404;
     }
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <h2>
-      <i class="fa-solid fa-right-to-bracket"></i>
-      Login E-Kinerja
-    </h2>
 
-    <p>Masuk ke sistem E-Kinerja</p>
+<div class="bg"></div>
 
-    <div class="form-group">
+<div class="card">
+
+  <!-- HEADER BARU (SEPERTI REGISTER) -->
+  <div class="header">
+    <i class="fa-solid fa-leaf"></i>
+    <h2>Login SI-TEKAD</h2>
+    <p>Masuk ke Sistem SI-TEKAD Dishut</p>
+  </div>
+
+  <!-- FORM LOGIN (ID TIDAK DIUBAH = AMAN) -->
+  <form id="loginForm">
+
+    <div class="input-box">
+      <i class="fa-solid fa-envelope"></i>
       <input type="email" id="email" placeholder="Email" required>
     </div>
 
-    <div class="form-group">
+    <div class="input-box password-box">
+      <i class="fa-solid fa-lock"></i>
+      
       <input type="password" id="password" placeholder="Password" required>
-    </div>
+      
+      <i class="fa-solid fa-eye toggle-password" onclick="togglePassword()"></i></div>
 
-    <button onclick="login()">Login</button>
+    <button type="submit">
+      <i class="fa-solid fa-right-to-bracket"></i> Login
+    </button>
 
-    <p class="register-text">
-      Belum punya akun?
-      <a href="register.html">Daftar</a>
-    </p>
-  </div>
+  </form>
 
-  <script>
-    // Set akun default (reset setiap refresh)
-    localStorage.setItem("email", "admin@gmail.com");
-    localStorage.setItem("password", "123");
+  <!-- NOTIFIKASI (TETAP ADA) -->
+  <div id="notif" class="notif"></div>
 
-    function login() {
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const password = document.getElementById("password").value.trim();
+  <!-- LINK REGISTER -->
+  <p class="login-text">
+    Belum punya akun? <a href="register.html">Daftar</a>
+  </p>
 
-      const savedEmail = (localStorage.getItem("email") || "").toLowerCase();
-      const savedPassword = localStorage.getItem("password");
+</div>
 
-      // Validasi input kosong
-      if (!email || !password) {
-        alert("Email dan password wajib diisi!");
-        return;
-      }
+<!-- JS TIDAK DIUBAH -->
+<script src="js/login.js"></script>
 
-      // Proses login
-      if (email === savedEmail && password === savedPassword) {
-        localStorage.setItem("isLogin", "true");
-        alert("Login berhasil!");
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Email atau password salah!");
-      }
-    }
-  </script>
 </body>
 </html>

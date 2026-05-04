@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard SI-TEKAD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+/* BACKGROUND */
+body{
+  display:flex;
+  background: radial-gradient(circle at top, #145c44, #0b2f24 60%);
+  color:white;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  min-height:100vh;
+  background:rgba(11,47,36,0.85);
+  backdrop-filter: blur(12px);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.brand img{
+  width:65px;
+  height:65px;
+  border-radius:10px;
+}
+
+.brand h3{
+  font-size:18px;
+}
+
+.menu a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  margin:8px 0;
+  color:#cfe9df;
+  text-decoration:none;
+  border-radius:10px;
+}
+
+.menu a:hover{
+  background:rgba(255,255,255,0.08);
+}
+
+.menu a.active{
+  background:#1f8a62;
+}
+
+.logout{
+  color:#ff6b6b !important;
+}
+
+/* DEVELOPED BY */
+.dev{
+  background:#132d24;
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+  margin-top:20px;
+}
+
+.dev i{font-size:20px;}
+.dev p{font-size:13px;color:#aaa;}
+.dev h4{font-size:15px;}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:25px;
+}
+
+.header{
+  background:rgba(31,107,80,0.5);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+}
+
+/* CARD */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
+
+/* TABLE */
+.table-box{
+  background:rgba(255,255,255,0.08);
+  padding:20px;
+  border-radius:15px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  color:black;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+th{
+  background:#0b3d2e;
+  color:white;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+}
+
+.badge{
+  padding:5px 10px;
+  border-radius:20px;
+  color:white;
+  font-size:12px;
+}
+
+.baik{background:#1f8a62;}
+.cukup{background:#f39c12;}
+.kurang{background:#e74c3c;}
+
+.file-link{
+  color:#0b3d2e;
+  font-weight:bold;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+  <div>
+    <div class="brand">
+      <img src="../assets/images/dishut.jpeg">
+      <h3>SI-TEKAD ADMIN</h3>
+    </div>
+
+    <div class="menu">
+      <a class="active"><i class="fa fa-home"></i> Dashboard</a>
+      <a href="user.html"><i class="fa fa-users"></i> User</a>
+      <a href="rangking.html"><i class="fa fa-trophy"></i> Ranking</a>
+      <a class="logout" onclick="logout()"><i class="fa fa-right-from-bracket"></i> Logout</a>
+    </div>
+  </div>
+
+  <div class="dev">
+    <i class="fa-solid fa-code"></i>
+    <p>DEVELOPED BY</p>
+    <h4>Rahmanda Al Riski</h4>
+  </div>
+
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="header">
+    <h2>📊 Dashboard Admin SI-TEKAD</h2>
+    <p>Monitoring semua laporan user dari database</p>
+  </div>
+
+  <!-- STAT -->
+  <div class="cards">
+    <div class="card">
+      <h3 id="total">0</h3>
+      <p>Total Laporan</p>
+    </div>
+    <div class="card">
+      <h3 id="baik">0</h3>
+      <p>Sangat Baik</p>
+    </div>
+    <div class="card">
+      <h3 id="cukup">0</h3>
+      <p>Cukup</p>
+    </div>
+    <div class="card">
+      <h3 id="kurang">0</h3>
+      <p>Kurang</p>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>ID User</th>
+          <th>Tanggal</th>
+          <th>Unit</th>
+          <th>File</th>
+          <th>Nilai</th>
+          <th>Status</th>
+          <th>Waktu Upload</th>
+        </tr>
+      </thead>
+      <tbody id="tableData"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+async function loadData(){
+
+  let res = await fetch("../backend/get_laporan_admin.php");
+  let data = await res.json();
+
+  let tbody = document.getElementById("tableData");
+
+  let total = data.length;
+  let baik = 0, cukup = 0, kurang = 0;
+
+  tbody.innerHTML = "";
+
+  data.forEach(item => {
+
+    if(item.status === "Sangat Baik") baik++;
+    else if(item.status === "Cukup") cukup++;
+    else if(item.status === "Kurang") kurang++;
+
+    let badgeClass = item.status === "Sangat Baik" ? "baik" :
+                     item.status === "Cukup" ? "cukup" : "kurang";
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${item.user_id}</td>
+        <td>${item.tanggal}</td>
+        <td>${item.unit}</td>
+        <td>
+          <a class="file-link" href="../backend/upload/${item.file_pdf}" target="_blank">
+            ${item.file_pdf}
+          </a>
+        </td>
+        <td>${item.nilai_total}</td>
+        <td><span class="badge ${badgeClass}">${item.status}</span></td>
+        <td>${item.created_at}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+  document.getElementById("baik").innerText = baik;
+  document.getElementById("cukup").innerText = cukup;
+  document.getElementById("kurang").innerText = kurang;
+}
+
+function logout(){
+  location.href="login.html";
+}
+
+loadData();
+</script>
+
+</body>
+</html>

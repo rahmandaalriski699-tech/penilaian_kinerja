@@ -8,124 +8,230 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  background: linear-gradient(135deg, #1f7a5c, #0b3d2e);
-  min-height: 100vh;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 240px;
-  background: rgba(255,255,255,0.05);
+/* ================= BODY ================= */
+body{
+  display:flex;
+  background: radial-gradient(circle at top, #145c44, #0b2f24 60%);
+  color:white;
+}
+
+/* ================= SIDEBAR (GLASS STYLE) ================= */
+.sidebar{
+  width:260px;
+  min-height:100vh;
+  background:rgba(11,47,36,0.85);
+  backdrop-filter: blur(12px);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border-right:1px solid rgba(255,255,255,0.08);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.brand img{
+  width:70px;
+  height:70px;
+  border-radius:10px;
+}
+
+.brand h3{
+  font-size:20px;
+  font-weight:700;
+}
+
+/* MENU */
+.menu a{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px;
+  margin:8px 0;
+  color:#cfe9df;
+  text-decoration:none;
+  border-radius:10px;
+  transition:0.2s;
+  overflow:hidden;
+}
+
+.menu a:hover{
+  background:rgba(255,255,255,0.08);
+}
+
+/* garis aktif animasi */
+.menu a::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:4px;
+  height:100%;
+  background:#00c48c;
+  transform:scaleY(0);
+  transition:0.2s;
+}
+
+.menu a:hover::before{
+  transform:scaleY(1);
+}
+
+.menu a.active{
+  background:#1f8a62;
+}
+
+.logout{
+  color:#ff6b6b !important;
+}
+
+/* DEV */
+.dev{
+  background:#132d24;
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.dev i{
+  font-size:20px;
+  margin-bottom:5px;
+}
+
+.dev p{
+  font-size:13px;
+  color:#aaa;
+}
+
+.dev h4{
+  font-size:16px;
+}
+
+/* ================= MAIN ================= */
+.main{
+  flex:1;
+  padding:25px;
+  animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* HEADER */
+.header{
+  background:rgba(31,107,80,0.6);
   backdrop-filter: blur(10px);
-  color: white;
-  padding: 20px;
-}
-
-.sidebar h2 { margin-bottom: 25px; }
-
-.sidebar a {
-  display: block;
-  color: #d4f5e9;
-  text-decoration: none;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 8px;
-  transition: 0.3s;
-}
-
-.sidebar a:hover {
-  background: rgba(255,255,255,0.2);
-}
-
-/* ACTIVE MENU */
-.sidebar a.active {
-  background: rgba(255,255,255,0.3);
-}
-
-/* MAIN */
-.main { flex: 1; padding: 30px; }
-
-/* TOPBAR */
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  color: white;
-}
-
-.logout-btn {
-  background: red;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* CARD */
-.card {
-  background: rgba(255,255,255,0.1);
-  padding: 20px;
-  border-radius: 10px;
-  color: white;
-  margin-bottom: 20px;
+  padding:18px;
+  border-radius:12px;
+  font-size:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
 /* FORM */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+.form-card{
+  margin-top:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  color:white;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
-.full { grid-column: span 2; }
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
+.full{
+  grid-column:span 2;
+}
+
+/* INPUT */
+input, select{
+  width:100%;
+  padding:12px;
+  border:none;
+  outline:none;
+  border-radius:8px;
+  margin-top:5px;
+  background:rgba(255,255,255,0.1);
+  color:white;
+}
+
+input::placeholder{
+  color:#ccc;
+}
+
+.readonly{
+  background:rgba(255,255,255,0.15);
 }
 
 /* BUTTON */
-button {
-  padding: 10px 15px;
-  background: #00c896;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+.save-btn{
+  margin-top:20px;
+  width:100%;
+  background:linear-gradient(135deg,#00c48c,#00a878);
+  border:none;
+  padding:14px;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+  box-shadow:0 8px 20px rgba(0,196,140,0.3);
 }
 
-button:hover {
-  transform: scale(1.05);
+.save-btn:hover{
+  transform:translateY(-2px);
 }
 
-/* TABLE */
-table {
-  width: 100%;
-  margin-top: 10px;
-  border-collapse: collapse;
+/* TOAST */
+.toast{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#1f8a62;
+  padding:15px;
+  border-radius:8px;
+  opacity:0;
+  transform:translateY(-20px);
+  transition:0.3s;
 }
 
-th, td {
-  padding: 10px;
-  background: rgba(255,255,255,0.1);
-  color: white;
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-th { background: rgba(0,0,0,0.3); }
-
-.delete-btn {
-  background: crimson;
-  padding: 5px 10px;
+select{
+  background:#1f3d33;
+  color:white;
 }
+
+option{
+  color:black;
+  background:white;
+}
+
+.toast.error{ background:#e74c3c; }
+.toast.warning{ background:#f39c12; }
 </style>
 </head>
 
@@ -133,188 +239,162 @@ th { background: rgba(0,0,0,0.3); }
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <h2><i class="fa-solid fa-tree"></i> E-Kinerja</h2>
 
-  <a href="dashboard.html" class="active">
-    <i class="fa-solid fa-home"></i> Dashboard
-  </a>
+  <div>
+    <div class="brand">
+      <img src="../assets/images/dishut.jpeg">
+      <h3>SI-TEKAD HUTAN</h3>
+    </div>
 
-  <a href="laporan.html">
-    <i class="fa-solid fa-file"></i> Laporan
-  </a>
+    <div class="menu">
+      <a href="dashboard.html" class="active">
+        <i class="fa-solid fa-home"></i> Dashboard
+      </a>
 
-  <a href="penilaian.html">
-    <i class="fa-solid fa-chart-line"></i> Penilaian
-  </a>
+      <a href="laporan.html">
+        <i class="fa-solid fa-file-alt"></i> Laporan
+      </a>
+
+      <a class="logout" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+      </a>
+    </div>
+  </div>
+
+  <div class="dev">
+    <i class="fa-solid fa-code"></i>
+    <p>DEVELOPED BY</p>
+    <h4>Rahmanda Al Riski</h4>
+  </div>
+
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div id="welcome"></div>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
+  <div class="header" id="welcome"></div>
 
-  <!-- FORM INPUT -->
-  <div class="card">
-    <h3><i class="fa-solid fa-upload"></i> Input Laporan (PDF)</h3>
+  <div class="form-card">
+    <h3>Form Input Laporan</h3>
 
     <div class="form-grid">
+
       <div>
         <label>Tanggal</label>
-        <input type="date" id="tanggal">
+        <input type="text" id="tanggal" readonly>
       </div>
 
       <div>
-        <label>Unit Kerja</label>
-        <select id="unit">
-  <option value="">-- Pilih Unit Kerja --</option>
-
-  <option>Sekretariat</option>
-  <option>Bidang PHKSDAE</option>
-  <option>Bidang PRPH</option>
-  <option>Bidang PPMHA</option>
-  <option>Bidang PDAS RHL</option>
-
-  <option>UPTD KPHL Pasaman Unit I</option>
-  <option>UPTD KPHL Pasaman Barat Unit II</option>
-  <option>UPTD KPHL Limapuluh Kota Unit III</option>
-  <option>UPTD KPHL Agam Unit IV</option>
-  <option>UPTD KPHL Bukit Barisan Unit V</option>
-  <option>UPTD KPHL Sijunjung Unit VI</option>
-  <option>UPTD KPHL Solok Unit VII</option>
-
-  <option>UPTD KPHP Solok Selatan Unit VIII</option>
-  <option>UPTD KPHP Dharmasraya Unit IX</option>
-  <option>UPTD KPHP Pesisir Selatan Unit X</option>
-  <option>UPTD KPHP Pagai Sipora Unit XI</option>
-  <option>UPTD KPHP Siberut Unit XII</option>
-
-  <option>UPTD Balai Sertifikasi dan Perbenihan Tanaman Hutan</option>
-</select>
+        <label>Waktu</label>
+        <input type="text" id="waktu" readonly>
       </div>
 
       <div class="full">
-        <label>Upload File PDF</label>
-        <input type="file" id="file" accept="application/pdf">
+        <label>Unit Kerja</label>
+        <select id="unit" onchange="cekInput()">
+          <option value="">-- Pilih Unit --</option>
+          <option>Sekretariat</option>
+          <option>Bidang PHKSDAE</option>
+          <option>Bidang PRPH</option>
+          <option>Bidang PPMHA</option>
+          <option>Bidang PDAS RHL</option>
+          <option>UPTD KPHL Pasaman Unit I</option>
+          <option>UPTD KPHL Pasaman Barat Unit II</option>
+          <option>UPTD KPHL Limapuluh Kota Unit III</option>
+          <option>UPTD KPHL Agam Unit IV</option>
+          <option>UPTD KPHL Bukit Barisan Unit V</option>
+          <option>UPTD KPHL Sijunjung Unit VI</option>
+          <option>UPTD KPHL Solok Unit VII</option>
+          <option>UPTD KPHP Solok Selatan Unit VIII</option>
+          <option>UPTD KPHP Dharmasraya Unit IX</option>
+          <option>UPTD KPHP Pesisir Selatan Unit X</option>
+          <option>UPTD KPHP Pagai Sipora Unit XI</option>
+          <option>UPTD KPHP Siberut Unit XII</option>
+          <option>UPTD Balai Sertifikasi dan Perbenihan</option>
+        </select>
       </div>
+
+      <div class="full">
+        <label>Upload PDF</label>
+        <input type="file" id="fileInput" onchange="cekInput()">
+      </div>
+
     </div>
 
-    <br>
-    <button onclick="tambah()">
-      <i class="fa-solid fa-save"></i> Simpan
-    </button>
-  </div>
-
-  <!-- DATA TERAKHIR -->
-  <div class="card">
-    <h3><i class="fa-solid fa-clock"></i> Data Terakhir</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Tanggal</th>
-          <th>Unit</th>
-          <th>File</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="tabel"></tbody>
-    </table>
+    <button class="save-btn" id="btnSimpan" onclick="simpanData()">Simpan</button>
   </div>
 
 </div>
 
+<div id="toast" class="toast"></div>
+
 <script>
-// 🔐 CEK LOGIN
-if (localStorage.getItem("isLogin") !== "true") {
-  alert("Silakan login terlebih dahulu!");
-  window.location.href = "login.html";
+function setDateTime(){
+  let now = new Date();
+
+  let y = now.getFullYear();
+  let m = String(now.getMonth()+1).padStart(2,'0');
+  let d = String(now.getDate()).padStart(2,'0');
+
+  document.getElementById("tanggal").value = `${y}-${m}-${d}`;
+  document.getElementById("waktu").value = now.toLocaleTimeString("id-ID");
 }
 
-// 👤 NAMA USER
+function cekInput(){
+  let unit = document.getElementById("unit").value;
+  let file = document.getElementById("fileInput").files.length;
+
+  document.getElementById("btnSimpan").disabled = !(unit && file);
+}
+
+function simpanData(){
+  let tanggal = document.getElementById("tanggal").value;
+  let unit = document.getElementById("unit").value;
+  let file = document.getElementById("fileInput").files[0];
+
+  let formData = new FormData();
+  formData.append("tanggal", tanggal);
+  formData.append("unit", unit);
+  formData.append("file", file);
+
+  fetch("../backend/simpan.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.status === "success"){
+      showToast("Laporan berhasil disimpan ✅");
+    }else{
+      showToast(data.message, "error");
+    }
+  })
+  .catch(err => {
+    showToast("Server error ❌", "error");
+    console.log(err);
+  });
+}
+
+function showToast(msg,type="success"){
+  let toast = document.getElementById("toast");
+  toast.className = "toast show " + type;
+  toast.innerText = msg;
+  setTimeout(()=>toast.className="toast",3000);
+}
+
+function logout(){
+  location.href="login.html";
+}
+
+let email = localStorage.getItem("email") || "user@example.com";
+let nama = email.split("@")[0];
+nama = nama.charAt(0).toUpperCase() + nama.slice(1);
+
 document.getElementById("welcome").innerText =
-  "Selamat datang, " + (localStorage.getItem("nama") || "User") + " 👋";
+`Halo, ${nama} 👋`;
 
-// ➕ TAMBAH DATA
-function tambah() {
-  const tanggal = document.getElementById("tanggal").value;
-  const unit = document.getElementById("unit").value;
-  const fileInput = document.getElementById("file");
-  const file = fileInput.files[0];
-
-  if (!tanggal || !unit || !file) {
-    alert("Semua data harus diisi!");
-    return;
-  }
-
-  if (file.type !== "application/pdf") {
-    alert("File harus berupa PDF!");
-    fileInput.value = "";
-    return;
-  }
-
-  let data = JSON.parse(localStorage.getItem("laporan")) || [];
-
-  data.push({
-    tanggal: tanggal,
-    unit: unit,
-    file: file.name,
-    nilai: "-"
-  });
-
-  localStorage.setItem("laporan", JSON.stringify(data));
-
-  alert("Laporan berhasil disimpan!");
-
-  // reset form
-  document.getElementById("tanggal").value = "";
-  document.getElementById("unit").value = "";
-  fileInput.value = "";
-
-  tampil();
-}
-
-// 📋 TAMPIL DATA TERAKHIR
-function tampil() {
-  let data = JSON.parse(localStorage.getItem("laporan")) || [];
-  let html = "";
-
-  data.slice(-5).reverse().forEach((d, i) => {
-    html += `
-      <tr>
-        <td>${d.tanggal}</td>
-        <td>${d.unit}</td>
-        <td>${d.file}</td>
-        <td>
-          <button class="delete-btn" onclick="hapus(${i})">
-            Hapus
-          </button>
-        </td>
-      </tr>
-    `;
-  });
-
-  document.getElementById("tabel").innerHTML = html;
-}
-
-// ❌ HAPUS
-function hapus(index) {
-  let data = JSON.parse(localStorage.getItem("laporan"));
-  data.splice(index, 1);
-  localStorage.setItem("laporan", JSON.stringify(data));
-  tampil();
-}
-
-// 🚪 LOGOUT
-function logout() {
-  localStorage.removeItem("isLogin");
-  window.location.href = "login.html";
-}
-
-// LOAD
-tampil();
+setDateTime();
+document.getElementById("btnSimpan").disabled = true;
 </script>
 
 </body>

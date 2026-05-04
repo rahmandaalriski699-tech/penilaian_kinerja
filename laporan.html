@@ -3,225 +3,355 @@
 <head>
 <meta charset="UTF-8">
 <title>Data Laporan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
 }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  background: linear-gradient(135deg, #1f7a5c, #0b3d2e);
-  min-height: 100vh;
+/* ================= BODY (SAMA DASHBOARD) ================= */
+body{
+  display:flex;
+  background: radial-gradient(circle at top, #145c44, #0b2f24 60%);
+  color:white;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 240px;
-  background: rgba(255,255,255,0.05);
+/* ================= SIDEBAR ================= */
+.sidebar{
+  width:260px;
+  min-height:100vh;
+  background:rgba(11,47,36,0.85);
+  backdrop-filter: blur(12px);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border-right:1px solid rgba(255,255,255,0.08);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.brand img{
+  width:70px;
+  height:70px;
+  border-radius:10px;
+}
+
+.brand h3{
+  font-size:20px;
+  font-weight:700;
+}
+
+/* MENU */
+.menu a{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px;
+  margin:8px 0;
+  color:#cfe9df;
+  text-decoration:none;
+  border-radius:10px;
+  transition:0.2s;
+  overflow:hidden;
+}
+
+.menu a:hover{
+  background:rgba(255,255,255,0.08);
+}
+
+.menu a::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:4px;
+  height:100%;
+  background:#00c48c;
+  transform:scaleY(0);
+  transition:0.2s;
+}
+
+.menu a:hover::before{
+  transform:scaleY(1);
+}
+
+.menu a.active{
+  background:#1f8a62;
+}
+
+.logout{
+  color:#ff6b6b !important;
+}
+
+/* DEV */
+.dev{
+  background:#132d24;
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.dev i{
+  font-size:20px;
+  margin-bottom:5px;
+}
+
+.dev p{
+  font-size:13px;
+  color:#aaa;
+}
+
+.dev h4{
+  font-size:16px;
+}
+
+/* ================= MAIN ================= */
+.main{
+  flex:1;
+  padding:25px;
+  animation:fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* HEADER */
+.header{
+  background:rgba(31,107,80,0.6);
   backdrop-filter: blur(10px);
-  color: white;
-  padding: 20px;
+  padding:18px;
+  border-radius:12px;
+  font-size:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
-.sidebar h2 {
-  margin-bottom: 25px;
+/* TABLE CARD */
+.table-card{
+  margin-top:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
-.sidebar a {
-  display: block;
-  color: #d4f5e9;
-  text-decoration: none;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 8px;
-  transition: 0.3s;
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
 }
 
-.sidebar a:hover {
-  background: rgba(255,255,255,0.2);
-  transform: translateX(5px);
+th{
+  background:#0b3d2e;
+  color:white;
+  padding:12px;
+  font-size:14px;
 }
 
-/* MAIN */
-.main {
-  flex: 1;
-  padding: 30px;
+td{
+  padding:12px;
+  text-align:center;
+  color:#333;
+  font-size:14px;
 }
 
-/* CARD */
-.card {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(15px);
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  color: white;
+/* BADGE */
+.badge{
+  padding:5px 10px;
+  border-radius:20px;
+  color:white;
+  font-size:12px;
 }
 
-/* TITLE */
-.card h3 {
-  margin-bottom: 20px;
-}
+.baik{ background:#1f8a62; }
+.cukup{ background:#f39c12; }
+.kurang{ background:#e74c3c; }
 
-/* LIST ITEM */
-li {
-  background: rgba(255,255,255,0.15);
-  margin-bottom: 15px;
-  padding: 15px;
-  border-radius: 12px;
-  border-left: 5px solid #00c896;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-li:hover {
-  transform: scale(1.02);
-}
-
-/* TEXT */
-li b {
-  color: #00ffcc;
-}
-
-small {
-  color: #ddd;
-}
-
-/* INPUT */
-input {
-  width: 100%;
-  padding: 8px;
-  margin: 8px 0;
-  border-radius: 6px;
-  border: none;
-  outline: none;
+/* FILE */
+.file-link{
+  color:#e74c3c;
+  text-decoration:none;
+  font-weight:600;
 }
 
 /* BUTTON */
-button {
-  padding: 6px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-  margin-right: 5px;
-  transition: 0.3s;
+.btn-delete{
+  background:#ff4d4d;
+  border:none;
+  color:white;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-/* EDIT */
-.edit-btn {
-  background: linear-gradient(45deg, orange, gold);
-  color: white;
-}
-
-.edit-btn:hover {
-  transform: scale(1.05);
-}
-
-/* DELETE */
-.delete-btn {
-  background: linear-gradient(45deg, #ff4d4d, #ff0000);
-  color: white;
-}
-
-.delete-btn:hover {
-  transform: scale(1.05);
+.btn-delete:hover{
+  transform:scale(1.05);
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- ================= SIDEBAR ================= -->
 <div class="sidebar">
-  <h2><i class="fa-solid fa-tree"></i> E-Kinerja</h2>
 
-  <a href="dashboard.html"><i class="fa-solid fa-home"></i> Dashboard</a>
-  <a href="laporan.html"><i class="fa-solid fa-file"></i> Laporan</a>
-  <a href="penilaian.html"><i class="fa-solid fa-chart-line"></i> Penilaian</a>
-</div>
+  <div>
+    <div class="brand">
+      <img src="../assets/images/dishut.jpeg">
+      <h3>SI-TEKAD HUTAN</h3>
+    </div>
 
-<!-- MAIN -->
-<div class="main">
+    <div class="menu">
+      <a href="dashboard.html">
+        <i class="fa-solid fa-home"></i> Dashboard
+      </a>
 
-  <div class="card">
-    <h3><i class="fa-solid fa-list"></i> Daftar Laporan</h3>
-    <ul id="listLaporan"></ul>
+      <a href="laporan.html" class="active">
+        <i class="fa-solid fa-file-alt"></i> Laporan
+      </a>
+
+      <a class="logout" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+      </a>
+    </div>
+  </div>
+
+  <div class="dev">
+    <i class="fa-solid fa-code"></i>
+    <p>DEVELOPED BY</p>
+    <h4>Rahmanda Al Riski</h4>
   </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- ================= MAIN ================= -->
+<div class="main">
+
+  <div class="header">
+    <h2>📊 Data Laporan</h2>
+    <p>Daftar laporan hasil upload user</p>
+  </div>
+
+  <div class="table-card">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Waktu</th>
+          <th>Unit</th>
+          <th>File</th>
+          <th>Nilai</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody id="tabelData"></tbody>
+    </table>
+
+  </div>
+
+</div>
 
 <script>
-if(localStorage.getItem("isLogin") !== "true"){
-  window.location.href = "login.html";
-}
+async function loadData(){
+  let tbody = document.getElementById("tabelData");
+  tbody.innerHTML = "<tr><td colspan='7'>Loading...</td></tr>";
 
-function tampilkanLaporan(){
-  let list = document.getElementById("listLaporan");
-  list.innerHTML = "";
+  let res = await fetch("../backend/get_laporan.php");
+  let data = await res.json();
 
-  let data = JSON.parse(localStorage.getItem("laporan")) || [];
+  tbody.innerHTML = "";
 
-  data.forEach((item, index)=>{
-    let li = document.createElement("li");
-    li.innerHTML = `
-      <b>${item.unit}</b><br>
-      ${item.laporan}<br>
-
-      <small><i class="fa-solid fa-calendar"></i> ${item.tanggal}</small><br>
-
-      <input type="text" class="tanggalPicker" id="editTanggal${index}" value="${item.tanggal}">
-
-      <button class="edit-btn" onclick="editTanggal(${index})">
-        <i class="fa-solid fa-pen"></i> Edit
-      </button>
-
-      <button class="delete-btn" onclick="hapus(${index})">
-        <i class="fa-solid fa-trash"></i> Hapus
-      </button>
-    `;
-    list.appendChild(li);
-  });
-
-  flatpickr(".tanggalPicker", {
-    dateFormat: "Y-m-d"
-  });
-}
-
-function editTanggal(index){
-  let data = JSON.parse(localStorage.getItem("laporan")) || [];
-
-  let newTanggal = document.getElementById("editTanggal"+index).value;
-
-  if(!newTanggal){
-    alert("Pilih tanggal dulu!");
+  if(!data || data.length === 0){
+    tbody.innerHTML = "<tr><td colspan='7'>Tidak ada data</td></tr>";
     return;
   }
 
-  data[index].tanggal = newTanggal;
+  data.forEach(item => {
 
-  localStorage.setItem("laporan", JSON.stringify(data));
+    let statusClass = "baik";
+    if(item.status === "Cukup") statusClass = "cukup";
+    if(item.status === "Kurang") statusClass = "kurang";
 
-  alert("Tanggal berhasil diubah!");
-  tampilkanLaporan();
+    let datetime = item.created_at ?? "-";
+    let tanggal = "-";
+    let waktu = "-";
+
+    if(datetime !== "-"){
+      let split = datetime.split(" ");
+      tanggal = split[0];
+      waktu = split[1] ?? "-";
+    }
+
+    let row = `
+      <tr>
+        <td>${tanggal}</td>
+        <td>${waktu}</td>
+        <td>${item.unit}</td>
+        <td>
+          <a class="file-link" href="../backend/upload/${item.file_pdf}" target="_blank">
+            ${item.file_pdf}
+          </a>
+        </td>
+        <td><b>${item.nilai_total}</b></td>
+        <td>
+          <span class="badge ${statusClass}">
+            ${item.status}
+          </span>
+        </td>
+        <td>
+          <button class="btn-delete" onclick="hapus(${item.id})">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+
+    tbody.innerHTML += row;
+  });
 }
 
-function hapus(index){
-  let data = JSON.parse(localStorage.getItem("laporan")) || [];
-  data.splice(index,1);
-  localStorage.setItem("laporan", JSON.stringify(data));
-  tampilkanLaporan();
+async function hapus(id){
+  if(!confirm("Yakin hapus data?")) return;
+
+  let form = new FormData();
+  form.append("id", id);
+
+  await fetch("../backend/delete_laporan.php", {
+    method:"POST",
+    body:form
+  });
+
+  loadData();
 }
 
-tampilkanLaporan();
+function logout(){
+  location.href="login.html";
+}
+
+loadData();
 </script>
 
 </body>
